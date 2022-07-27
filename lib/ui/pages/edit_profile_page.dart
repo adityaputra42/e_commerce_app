@@ -5,6 +5,8 @@ class EditProfilePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    AuthProvider authProvider = Provider.of<AuthProvider>(context);
+    UserModel user = authProvider.user;
     header() {
       return AppBar(
           toolbarHeight: 80.w,
@@ -83,16 +85,15 @@ class EditProfilePage extends StatelessWidget {
                 shape: BoxShape.circle,
                 border: Border.all(width: 1, color: yellowColor)),
             child: Container(
-                decoration: const BoxDecoration(
+                decoration: BoxDecoration(
                     shape: BoxShape.circle,
                     image: DecorationImage(
-                        image: AssetImage('assets/adit.jpg'),
+                        image: NetworkImage(user.profilePhotoUrl!),
                         fit: BoxFit.cover))),
           ),
-          input("Name", "Aditya Putra Pratama", EdgeInsets.only(top: 30.w)),
-          input("Username", "aditya24", EdgeInsets.only(top: 20.w)),
-          input("Email Address", "aditya24@gmail.com",
-              EdgeInsets.only(top: 20.w)),
+          input("Name", "${user.name}", EdgeInsets.only(top: 30.w)),
+          input("Username", "${user.username}", EdgeInsets.only(top: 20.w)),
+          input("Email Address", "${user.email}", EdgeInsets.only(top: 20.w)),
         ]),
       );
     }

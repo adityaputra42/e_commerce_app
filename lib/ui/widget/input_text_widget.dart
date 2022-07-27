@@ -1,19 +1,19 @@
 part of 'widget.dart';
 
 class InputTextWidget extends StatelessWidget {
-  final String title;
-  final String hintText;
+  final String? title;
+  final String? hintText;
   final bool obscureText;
-  final Icon icon;
-  final TextEditingController controller;
+  final Icon? icon;
+  final TextEditingController? controller;
 
   const InputTextWidget(
       {Key? key,
       this.obscureText = false,
-      this.title = '',
-      this.hintText = '',
-      required this.icon,
-      required this.controller})
+      this.title,
+      this.hintText,
+      this.icon,
+      this.controller})
       : super(key: key);
 
   @override
@@ -26,7 +26,7 @@ class InputTextWidget extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
-            title,
+            title!,
             style: blackTextStyle.copyWith(fontSize: 16.sp, fontWeight: medium),
           ),
           SizedBox(

@@ -1,15 +1,62 @@
 part of 'pages.dart';
 
-class SignUpPage extends StatelessWidget {
-  SignUpPage({Key? key}) : super(key: key);
+class SignUpPage extends StatefulWidget {
+  const SignUpPage({Key? key}) : super(key: key);
 
-  final TextEditingController nameControler = TextEditingController();
-  final TextEditingController usernameControler = TextEditingController();
-  final TextEditingController emailControler = TextEditingController();
-  final TextEditingController passwordControler = TextEditingController();
+  @override
+  State<SignUpPage> createState() => _SignUpPageState();
+}
+
+class _SignUpPageState extends State<SignUpPage> {
+  final TextEditingController nameControler = TextEditingController(text: '');
+
+  final TextEditingController usernameControler =
+      TextEditingController(text: '');
+
+  final TextEditingController emailControler = TextEditingController(text: '');
+
+  final TextEditingController passwordControler =
+      TextEditingController(text: '');
+
+  bool isLoading = false;
 
   @override
   Widget build(BuildContext context) {
+    AuthProvider authProvider = Provider.of<AuthProvider>(context);
+
+    handleSignUp() async {
+      setState(() {
+        isLoading = true;
+      });
+
+      if (await authProvider.register(
+        name: nameControler.text,
+        username: usernameControler.text,
+        email: emailControler.text,
+        password: passwordControler.text,
+      )) {
+        Navigator.pushAndRemoveUntil(
+            context,
+            PageTransition(
+                child: const MainPage(), type: PageTransitionType.fade),
+            (route) => false);
+      } else {
+        ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+          duration: const Duration(milliseconds: 1000),
+          dismissDirection: DismissDirection.up,
+          backgroundColor: redColor,
+          content: Text(
+            "Gagal Register",
+            style: whiteTextStyle.copyWith(fontSize: 14.sp),
+            textAlign: TextAlign.center,
+          ),
+        ));
+      }
+      setState(() {
+        isLoading = false;
+      });
+    }
+
     Widget header() {
       return FadeInDown(
         child: Container(
@@ -71,17 +118,15 @@ class SignUpPage extends StatelessWidget {
                 controller: passwordControler),
           ),
           FadeInLeft(
-            child: ButtonWidget(
-              title: 'Sign Up',
-              onPressed: () {
-                Navigator.push(
-                    context,
-                    PageTransition(
-                        child: const MainPage(),
-                        type: PageTransitionType.fade));
-              },
-              margin: EdgeInsets.only(top: 10.w, bottom: 40.w),
-            ),
+            child: isLoading
+                ? LoadingButton(
+                    margin: EdgeInsets.only(top: 10.w, bottom: 40.w),
+                  )
+                : ButtonWidget(
+                    title: 'Sign Up',
+                    onPressed: handleSignUp,
+                    margin: EdgeInsets.only(top: 10.w, bottom: 40.w),
+                  ),
           ),
         ],
       );

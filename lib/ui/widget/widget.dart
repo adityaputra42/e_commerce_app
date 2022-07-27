@@ -16,3 +16,4 @@ part 'chat_buble.dart';
 part 'wish_list_card.dart';
 part 'item_cart.dart';
 part 'checkout_item.dart';
+part 'loading_button.dart';

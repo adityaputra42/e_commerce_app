@@ -12,6 +12,9 @@ class _HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
+    AuthProvider authProvider = Provider.of<AuthProvider>(context);
+    UserModel user = authProvider.user;
+
     Widget header() {
       return Container(
         margin: EdgeInsets.only(left: 24.w, right: 24.w, top: 30.w),
@@ -22,7 +25,7 @@ class _HomePageState extends State<HomePage> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  'Hello, Aditya Putra Pratama',
+                  'Hello, ${user.name}',
                   style: blackTextStyle.copyWith(
                       fontWeight: semiBold, fontSize: 22.sp),
                   overflow: TextOverflow.clip,
@@ -31,7 +34,7 @@ class _HomePageState extends State<HomePage> {
                   height: 3.h,
                 ),
                 Text(
-                  'aditya42@gmail.com',
+                  '@${user.username}',
                   style: greyTextStyle.copyWith(fontSize: 14.sp),
                 )
               ],
@@ -45,10 +48,11 @@ class _HomePageState extends State<HomePage> {
                 shape: BoxShape.circle,
                 border: Border.all(width: 1, color: yellowColor)),
             child: Container(
-              decoration: const BoxDecoration(
+              decoration: BoxDecoration(
                   shape: BoxShape.circle,
                   image: DecorationImage(
-                      image: AssetImage('assets/adit.jpg'), fit: BoxFit.cover)),
+                      image: NetworkImage(user.profilePhotoUrl!),
+                      fit: BoxFit.cover)),
             ),
           )
         ]),

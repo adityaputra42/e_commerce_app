@@ -23,7 +23,7 @@ class _ProductPageState extends State<ProductPage> {
     "assets/shoes.png",
   ];
   int currentIndex = 0;
-  bool isWishlist = true;
+  bool isWishlist = false;
   @override
   Widget build(BuildContext context) {
     Future<void> showSuccesDialog() {

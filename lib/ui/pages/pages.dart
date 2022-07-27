@@ -1,13 +1,17 @@
 import 'dart:async';
+import 'dart:developer';
 
 import 'package:animate_do/animate_do.dart';
-
 import 'package:carousel_slider/carousel_slider.dart';
+import 'package:e_commerce_app/provider/provider.dart';
 import 'package:e_commerce_app/theme/theme.dart';
 import 'package:e_commerce_app/ui/widget/widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:page_transition/page_transition.dart';
+import 'package:provider/provider.dart';
+
+import '../../models/model.dart';
 
 part 'splash_page.dart';
 part 'sign_in_page.dart';

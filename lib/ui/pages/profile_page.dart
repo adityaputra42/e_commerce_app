@@ -5,6 +5,8 @@ class ProfilePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    AuthProvider authProvider = Provider.of<AuthProvider>(context);
+    UserModel user = authProvider.user;
     Widget header() {
       return AppBar(
         toolbarHeight: 125.w,
@@ -19,24 +21,25 @@ class ProfilePage extends StatelessWidget {
               width: 65.w,
               height: 65.w,
               margin: EdgeInsets.only(right: 12.w),
-              decoration: const BoxDecoration(
+              decoration: BoxDecoration(
                   shape: BoxShape.circle,
                   image: DecorationImage(
-                      image: AssetImage('assets/adit.jpg'), fit: BoxFit.cover)),
+                      image: NetworkImage(user.profilePhotoUrl!),
+                      fit: BoxFit.cover)),
             ),
             Expanded(
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    'Hallo, Aditya Putra Pratama',
+                    'Hallo, ${user.name}',
                     style: blackTextStyle.copyWith(
                       fontSize: 22.sp,
                       fontWeight: semiBold,
                     ),
                   ),
                   Text(
-                    '@aditya27',
+                    '@${user.username}',
                     style: greyTextStyle.copyWith(
                       fontSize: 16.sp,
                       fontWeight: regular,

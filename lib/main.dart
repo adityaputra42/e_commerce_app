@@ -1,9 +1,12 @@
+import 'package:e_commerce_app/provider/provider.dart';
 import 'package:e_commerce_app/theme/theme.dart';
 import 'package:e_commerce_app/ui/pages/pages.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:provider/provider.dart';
 
 void main() {
+  WidgetsFlutterBinding.ensureInitialized();
   runApp(const MyApp());
 }
 
@@ -42,18 +45,22 @@ class _MyAppState extends State<MyApp> {
       minTextAdapt: true,
       splitScreenMode: true,
       builder: (context, child) {
-        return MaterialApp(
-          theme: lightTheme,
-          darkTheme: darkTheme,
-          themeMode: _themeManager.themeMode,
-          debugShowCheckedModeBanner: false,
-          home: const SplashPage(),
-          // routes: {
-          //   '/': (context) => const SplashPage(),
-          //   '/sign-in': (context) => SignInPage(),
-          //   '/sign-up': (context) => SignUpPage(),
-          //   '/main': (context) => const MainPage(),
-          // },
+        return MultiProvider(
+          providers: [
+            ChangeNotifierProvider(
+              create: (context) => AuthProvider(),
+            ),
+            ChangeNotifierProvider(
+              create: (context) => ProductProvider(),
+            )
+          ],
+          child: MaterialApp(
+            theme: lightTheme,
+            darkTheme: darkTheme,
+            themeMode: _themeManager.themeMode,
+            debugShowCheckedModeBanner: false,
+            home: const SplashPage(),
+          ),
         );
       },
     );
